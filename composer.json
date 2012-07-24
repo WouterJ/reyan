@@ -11,6 +11,7 @@
     ],
 
     "require": {
-        "symfony/yaml": "2.1.*"
+        "symfony/yaml": "2.1.*",
+        "pimple/pimple": "1.0.0"
     }
 }

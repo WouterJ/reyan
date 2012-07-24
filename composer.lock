@@ -1,6 +1,10 @@
 {
-    "hash": "7d65c771fac81ec0829f129b27585f59",
+    "hash": "3573402da96b62872b3d2bea1f7fbfd8",
     "packages": [
+        {
+            "package": "pimple/pimple",
+            "version": "1.0.0"
+        },
         {
             "package": "symfony/yaml",
             "version": "dev-master",
