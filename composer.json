@@ -1,0 +1,16 @@
+{
+    "name": "reyan/reyan",
+    "description": "The Reyan framework",
+    "keywords": ["framework", "http"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Wouter J",
+            "homepage": "http://wouterj.nl/"
+        }
+    ],
+
+    "require": {
+        "symfony/yaml": "2.1.*"
+    }
+}
