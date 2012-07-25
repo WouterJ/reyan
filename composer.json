@@ -16,7 +16,7 @@
     },
 
     "autoload": {
-        "psr-0": { "Reyan\\Framework" : "vendor/Reyan" }
+        "psr-0": { "Reyan" : "vendor/" }
     },
     "target-dir": "Reyan/Framework"
 }
