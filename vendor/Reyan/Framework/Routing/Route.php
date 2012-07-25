@@ -47,6 +47,11 @@ class Route
         }
 
         if (preg_match($this->_rgx, $uri, $parameters)) {
+            foreach ($this->getDefaults() as $name => $default) {
+                if (!isset($parameters[$name])) {
+                    $parameters[$name] = $default;
+                }
+            }
             return $parameters;
         }
         return false;
@@ -59,8 +64,16 @@ class Route
      */
     protected function setRegex($pattern)
     {
+        $route = $this;
         $this->_rgx = '|';
-        $this->_rgx .= preg_replace('|:(\w*)|', '(?P<$1>[^/]+)', $pattern);
+        $this->_rgx .= preg_replace_callback('|/:(\w*)|', function($match) use ($route) { 
+            $param = '(?:/(?P<'.$match[1].'>[^/]+))';
+            if ($route->hasDefaultValue($match[1])) {
+                $param .= '?';
+            }
+
+            return $param;
+        }, $pattern);
         $this->_rgx .= ('/' != substr($pattern, -1)
                             ? '/?'
                             : ''
@@ -102,5 +115,17 @@ class Route
     public function getRequirements() 
     {
         return $this->requirements;
+    }
+
+    /**
+     * Checks if the parameter has a default value
+     *
+     * @param  string $parameter_name
+     *
+     * @return boolean
+     */
+    public function hasDefaultValue($parameter_name)
+    {
+        return array_key_exists($parameter_name, $this->defaults);
     }
 }

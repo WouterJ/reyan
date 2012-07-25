@@ -26,4 +26,19 @@ class RouteTest extends TC
 
         $this->assertFalse($route->match('/book'));
     }
+
+    public function testRouteWithParametersAndDefaultValues()
+    {
+        $route = new Route('/page/:id', 'PageController::show', array(
+            'id' => 12,
+        ));
+
+        $params = $route->match('/page');
+        $this->assertEquals(12, $params['id']);
+
+        $route = new Route('/post/:serie/:slug', 'PostController::show', array(
+            'serie' => null,
+        ));
+        $this->assertInternalType('array', $route->match('/post/hello-world'));
+    }
 }
