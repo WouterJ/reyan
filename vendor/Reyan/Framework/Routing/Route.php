@@ -26,7 +26,6 @@ class Route
      */
     public function __construct($pattern, $action, array $defaults = array(), array $requirements = array(), $method = 'ALL')
     {
-        $this->name = (string) $name;
         $this->pattern = (string) $pattern;
         $this->action = (string) $action;
         $this->defaults = $defaults;
@@ -47,8 +46,10 @@ class Route
             $this->setRegex($this->pattern);
         }
 
-        if (preg_match($this->_rgx, $uri)) {
+        if (preg_match($this->_rgx, $uri, $parameters)) {
+            return $parameters;
         }
+        return false;
     }
 
     /**
@@ -61,7 +62,7 @@ class Route
         $this->_rgx = '|';
         $this->_rgx .= preg_replace('|:(\w*)|', '(?P<$1>.*?)', $pattern);
         $this->_rgx .= ('/' != substr($pattern, -1)
-                            ? '/'
+                            ? '/?'
                             : ''
                        ).'|';
     }
