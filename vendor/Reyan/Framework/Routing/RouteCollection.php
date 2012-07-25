@@ -15,6 +15,7 @@ use \InvalidArgumentException;
 class RouteCollection implements IteratorAggregate, Countable
 {
     protected $routes = array();
+    protected $prefix;
 
     /**
      * Adds a route to the collection.
@@ -67,12 +68,29 @@ class RouteCollection implements IteratorAggregate, Countable
      */
     public function match($uri)
     {
+        if (isset($this->prefix)) {
+            if (preg_match('|^'.$this->prefix.'(.*?)$|', $uri, $matches)) {
+                $uri = $matches[1];
+            } else {
+                return false;
+            }
+        }
+
         foreach ($this as $route) {
             if ($r = $route->match($uri)) {
                 return $r;
             }
         }
+
         return false;
+    }
+
+    /**
+     * @param string $prefix
+     */
+    public function addPrefix($prefix)
+    {
+        $this->prefix = (string) $prefix;
     }
 
     public function getIterator()
