@@ -41,4 +41,13 @@ class RouteTest extends TC
         ));
         $this->assertInternalType('array', $route->match('/post/hello-world'));
     }
+
+    public function testRouteWithParametersAndRequirements()
+    {
+        $route = new Route('/page/:id', 'PageController::show', array(), array(
+            'id' => '\d+',
+        ));
+
+        $this->assertFalse($route->match('/page/foo'));
+    }
 }

@@ -67,7 +67,15 @@ class Route
         $route = $this;
         $this->_rgx = '|';
         $this->_rgx .= preg_replace_callback('|/:(\w*)|', function($match) use ($route) { 
-            $param = '(?:/(?P<'.$match[1].'>[^/]+))';
+            $param = '(?:/(?P<'.$match[1].'>';
+
+            if ($requirement = $route->getRequirement($match[1])) {
+                $param .= $requirement;
+            } else {
+                $param .= '[^/]+';
+            }
+            $param .= '))';
+
             if ($route->hasDefaultValue($match[1])) {
                 $param .= '?';
             }
@@ -112,9 +120,17 @@ class Route
     {
         return $this->defaults;
     }
+
     public function getRequirements() 
     {
         return $this->requirements;
+    }
+
+    public function getRequirement($parametername)
+    {
+        if (array_key_exists($parametername, $this->getRequirements())) {
+            return $this->requirements[$parametername];
+        }
     }
 
     /**
@@ -126,6 +142,6 @@ class Route
      */
     public function hasDefaultValue($parameter_name)
     {
-        return array_key_exists($parameter_name, $this->defaults);
+        return array_key_exists($parameter_name, $this->getDefaults());
     }
 }
