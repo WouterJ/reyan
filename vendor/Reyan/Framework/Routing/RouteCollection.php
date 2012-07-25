@@ -5,6 +5,7 @@ namespace Reyan\Framework\Routing;
 use \Countable;
 use \ArrayIterator;
 use \IteratorAggregate;
+use \InvalidArgumentException;
 
 /**
  * Holds all routes in a project
@@ -35,6 +36,43 @@ class RouteCollection implements IteratorAggregate, Countable
     public function addCollection($name, RouteCollection $collection)
     {
         $this->routes[(string) $name] = $collection;
+    }
+
+    /**
+     * Shortcut for addRoute() and addCollection()
+     */
+    public function add($name, $route)
+    {
+        switch (get_class($route)) {
+            case 'Reyan\Framework\Routing\Route' : 
+                $this->addRoute($name, $route);
+                break;
+            case 'Reyan\Framework\Routing\RouteCollection' :
+                $this->addCollection($name, $route);
+                break;
+            default :
+                throw new InvalidArgumentException(sprintf(
+                                                'Routing only accept Route or RouteCollection objects, but %s is given',
+                                                get_class($route)
+                                            ));
+        }
+    }
+
+    /**
+     * Get the route which matches with the current URI
+     *
+     * @param string $uri
+     *
+     * @return Route
+     */
+    public function match($uri)
+    {
+        foreach ($this as $route) {
+            if ($r = $route->match($uri)) {
+                return $r;
+            }
+        }
+        return false;
     }
 
     public function getIterator()

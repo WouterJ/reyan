@@ -29,10 +29,34 @@ class RouteCollectionTest extends TC
         $storebundle = new RouteCollection();
         $storebundle->addRoute('frontpage', new Route('/', 'StoreBundle::showFirst10'));
         $storebundle->addRoute('show_product', new Route('/product/:slug', 'StoreBundle::show'));
-        $storebundle->addRoute('buy_product', new Route('/', 'StoreBundle::buy'));
+        $storebundle->addRoute('buy_product', new Route('/product/:slug/buy', 'StoreBundle::buy'));
 
         $this->collection->addCollection('storebundle', $storebundle);
 
         $this->assertCount(3, $this->collection);
+    }
+
+    public function testAddShortCut()
+    {
+        $storebundle = new RouteCollection();
+        $storebundle->add('frontpage', new Route('/', 'StoreBundle::showFirst10'));
+        $storebundle->add('show_product', new Route('/product/:slug', 'StoreBundle::show'));
+        $storebundle->add('buy_product', new Route('/product/:slug/buy', 'StoreBundle::buy'));
+
+        $this->collection->add('storebundle', $storebundle);
+
+        $this->assertCount(3, $this->collection);
+    }
+
+    public function testMatching()
+    {
+        $storebundle = new RouteCollection();
+        $storebundle->add('frontpage', new Route('/', 'StoreBundle::showFirst10'));
+        $storebundle->add('show_product', new Route('/product/:slug', 'StoreBundle::show'));
+        $storebundle->add('buy_product', new Route('/product/:slug/buy', 'StoreBundle::buy'));
+
+        $this->collection->add('storebundle', $storebundle);
+
+        $this->assertInternalType('array', $this->collection->match('/product/foo'));
     }
 }
