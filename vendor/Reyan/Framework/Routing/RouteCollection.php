@@ -15,6 +15,17 @@ class RouteCollection implements IteratorAggregate, Countable
 {
     protected $routes = array();
 
+    /**
+     * Adds a route to the collection.
+     *
+     * @param string                        $name  The name of the route
+     * @param Reyan\Framework\Routing\Route $route
+     */
+    public function addRoute($name, Route $route)
+    {
+        $this->routes[(string) $name] = $route;
+    }
+
     public function getIterator()
     {
         return new ArrayIterator($this->routes);

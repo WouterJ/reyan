@@ -14,4 +14,13 @@ class RouteCollectionTest extends TC
     {
         $this->collection = new RouteCollection();
     }
+
+    public function testCountSingleRouteCollection()
+    {
+        $this->collection->addRoute('show_post', new Route('/post/:id', 'RouteController::show'));
+        $this->collection->addRoute('delete_post', new Route('/post/delete/:id', 'BackendRouteController::delete'));
+        $this->collection->addRoute('create_post', new Route('/post/create', 'BackendRouteController::create'));
+
+        $this->assertCount(3, $this->collection);
+    }
 }
