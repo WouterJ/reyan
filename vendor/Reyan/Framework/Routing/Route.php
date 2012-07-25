@@ -60,7 +60,7 @@ class Route
     protected function setRegex($pattern)
     {
         $this->_rgx = '|';
-        $this->_rgx .= preg_replace('|:(\w*)|', '(?P<$1>.*?)', $pattern);
+        $this->_rgx .= preg_replace('|:(\w*)|', '(?P<$1>[^/]+)', $pattern);
         $this->_rgx .= ('/' != substr($pattern, -1)
                             ? '/?'
                             : ''
