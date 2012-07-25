@@ -65,7 +65,7 @@ class Route
     protected function setRegex($pattern)
     {
         $route = $this;
-        $this->_rgx = '|';
+        $this->_rgx = '|^';
         $this->_rgx .= preg_replace_callback('|/:(\w*)|', function($match) use ($route) { 
             $param = '(?:/(?P<'.$match[1].'>';
 
@@ -85,7 +85,7 @@ class Route
         $this->_rgx .= ('/' != substr($pattern, -1)
                             ? '/?'
                             : ''
-                       ).'|';
+                       ).'$|';
     }
 
     /**

@@ -7,6 +7,13 @@ use PHPUnit_Framework_TestCase as TC;
 
 class RouteTest extends TC
 {
+    public function testPartMatch()
+    {
+        $route = new Route('/', 'WelcomeController::index');
+
+        $this->assertFalse($route->match('/hello'));
+    }
+
     public function testSimpleRoute()
     {
         $route = new Route('/hello', 'HelloController::index');
