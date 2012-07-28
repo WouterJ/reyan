@@ -11,12 +11,23 @@ use \PHPUnit_Framework_TestCase as TC;
 
 class YmlRoutesLoaderTest extends TC
 {
+    private $routesLoader;
+    private $routes;
+    
+    public function setUp()
+    {
+        $this->routesLoader = new YmlRoutesLoader(new Finder(), new Parser());
+        $this->routes = $this->routesLoader->load(__DIR__.'/../../Fixtures/routes');
+    }
+
     public function testRouteCollection()
     {
-        $routesLoader = new YmlRoutesLoader(new Finder(), new Parser());
+        $this->assertInstanceOf('Reyan\Framework\Routing\RouteCollection', $this->routes);
+        $this->assertCount(2, $this->routes);
+    }
 
-        $routes = $routesLoader->load(__DIR__.'/../../Fixtures/routes');
-
-        $this->assertInstanceOf('Reyan\Framework\Routing\RouteCollection', $routes);
+    public function testRoutes()
+    {
+        $this->assertInstanceOf('Reyan\Framework\Routing\Route', reset(iterator_to_array($this->routes)));
     }
 }
