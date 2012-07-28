@@ -14,7 +14,7 @@ class YmlFileLoaderTest extends TC
     public function testYmlParsing()
     {
         $fileLoader = new YmlFileLoader(new Finder(), new Parser());
-        $data = $fileLoader->load(__DIR__.'/../Fixtures/routes');
+        $data = $fileLoader->load(__DIR__.'/../Fixtures/Routing/routes');
 
         $this->assertInternalType('array', $data);
         $this->assertArrayHasKey('show_post', $data);
