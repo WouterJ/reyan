@@ -1,0 +1,5 @@
+show_post:
+    pattern: /post/:slug/:id
+    controller: BlogBundle:Post:Show
+    requirements:
+        id: \d+
