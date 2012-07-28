@@ -36,7 +36,7 @@ class YmlRoutesLoader extends YmlFileLoader
                 $route = new Route($options['pattern'], $options['controller'], $options['defaults'], $options['requirements'], $options['method']);
             }
 
-            $collection->add($route);
+            $collection->add($name, $route);
         }
 
         return $collection;
