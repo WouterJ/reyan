@@ -3,3 +3,7 @@ show_post:
     controller: BlogBundle:Post:Show
     requirements:
         id: \d+
+
+create_post:
+    pattern: /admin/post/create
+    controller: BackendBlogBundle:Post:Create
