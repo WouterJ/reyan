@@ -15,8 +15,8 @@ class RouterTest extends TC
     {
         $routes = new RouteCollection();
         $routes->add('homepage', new Route('/', 'WelcomeController::index'));
-        $routes->add('show_page', new Route('/:slug', 'PageController::show'));
         $routes->add('login', new Route('/login', 'LoginController::login'));
+        $routes->add('show_page', new Route('/:slug', 'PageController::show'));
 
         $request = new Request('/about', 'GET');
 
@@ -24,5 +24,9 @@ class RouterTest extends TC
         $route = $router->match();
 
         $this->assertEquals('PageController::show', $route['_controller']);
+        $this->assertEquals('about', $route['slug']);
+
+        $route1 = $router->match(new Request('/login', 'GET'));
+        $this->assertEquals('LoginController::login', $route1['_controller']);
     }
 }
