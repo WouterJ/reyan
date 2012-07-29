@@ -15,11 +15,18 @@ class RequestTest extends TC
         $this->assertEquals('GET', $request->getMethod());
     }
 
-    public function testGetPostAndGetValues()
+    public function testGetPostAndGetParameters()
     {
-        $request = new Request('/foo', 'GET', array('name' => 'Wouter'), array('bar' => 'acme'));
+        $request = new Request('/foo', 'POST', array('name' => 'Wouter'), array('bar' => 'acme'));
 
         $this->assertEquals('Wouter', $request->getRequest()->name);
         $this->assertEquals('acme', $request->getQuery()->bar);
+    }
+
+    public function testServerParameters()
+    {
+        $request = new Request('/foo', 'POST', array(), array(), array('REQUEST_METHOD' => 'POST'));
+
+        $this->assertEquals('POST', $request->getServer()->REQUEST_METHOD);
     }
 }

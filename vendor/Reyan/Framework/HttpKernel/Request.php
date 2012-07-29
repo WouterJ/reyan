@@ -6,21 +6,24 @@ class Request
 {
     private $uri;
     private $method;
-    private $query;
     private $request;
+    private $query;
+    private $server;
 
     /**
      * @param string $uri
      * @param string $method          One of the HTTP methods
      * @param array  $post   Optional The POST parameters
      * @param array  $get    Optional The GET parameters
+     * @param array  $server Optional The SERVER parameters
      */
-    public function __construct($uri, $method, $post = array(), $get = array())
+    public function __construct($uri, $method, $post = array(), $get = array(), $server = array())
     {
         $this->uri = $uri;
         $this->method = $method;
         $this->request = (object) $post;
         $this->query = (object) $get;
+        $this->server = (object) $server;
     }
 
     /**
@@ -57,5 +60,15 @@ class Request
     public function getQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * Gets the Server Parameters.
+     *
+     * @return StdClass
+     */
+    public function getServer()
+    {
+        return $this->server;
     }
 }
