@@ -52,7 +52,7 @@ class Route
                     $parameters[$name] = $default;
                 }
             }
-            return $parameters;
+            return $parameters + array('_controller' => $this->action);
         }
         return false;
     }
