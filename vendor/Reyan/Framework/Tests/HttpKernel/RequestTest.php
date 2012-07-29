@@ -29,4 +29,11 @@ class RequestTest extends TC
 
         $this->assertEquals('POST', $request->getServer()->REQUEST_METHOD);
     }
+
+    public function testCookies()
+    {
+        $request = new Request('/foo', 'GET', array(), array(), array(), array('theme_design' => 'bazbar'));
+
+        $this->assertEquals('bazbar', $request->getClient()->theme_design);
+    }
 }
