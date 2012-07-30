@@ -93,6 +93,22 @@ class RouteCollection implements IteratorAggregate, Countable
         $this->prefix = (string) $prefix;
     }
 
+    /**
+     * Gets a route by name.
+     *
+     * @param string $name
+     * 
+     * @return Route
+     */
+    public function getRoute($name)
+    {
+        if (!isset($this->routes[$name])) {
+            throw new InvalidArgumentException(sprintf('Route %s does not exists', $name));
+        }
+
+        return $this->routes[$name];
+    }
+
     public function getIterator()
     {
         return new ArrayIterator($this->routes);
