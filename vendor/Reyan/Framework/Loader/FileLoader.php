@@ -18,19 +18,16 @@ abstract class FileLoader
 
     /**
      * {@inheritdoc}
-     *
-     * @todo Remove the globals and use a good technique
      */
     public function load($resource)
     {
-        $GLOBALS['filename'] = basename($resource);
-        $directory = substr($resource, 0, -strlen($GLOBALS['filename']));
-        $GLOBALS['filename'] .= '.'.$this->getExtension();
+        $filename = basename($resource);
+        $directory = substr($resource, 0, -strlen($filename));
+        $filename .= '.'.$this->getExtension();
 
-        $files = $this->getFinder()->files()->in($directory)->filter(function($file) {
-            return $GLOBALS['filename'] == $file->getFileName();
-        });
-        $file = current(iterator_to_array($files));
+        $files = iterator_to_array($this->getFinder()->files()->in($directory)->name($filename));
+        $file = current($files);
+        var_dump($file->getFileName());
 
         return $this->generate($this->parse($file->getContents()));
     }

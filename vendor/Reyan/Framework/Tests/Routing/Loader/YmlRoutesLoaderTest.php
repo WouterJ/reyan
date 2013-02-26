@@ -39,6 +39,7 @@ class YmlRoutesLoaderTest extends TC
 
     public function testResources()
     {
+        var_dump('!!!resources!!!');
         $routes = $this->routesLoader->load(__DIR__.'/../../Fixtures/Routing/routeswithresource');
 
         $this->assertInstanceOf('Reyan\Framework\Routing\RouteCollection', $routes);

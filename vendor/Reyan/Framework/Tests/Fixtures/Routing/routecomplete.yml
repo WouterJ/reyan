@@ -1,0 +1,10 @@
+post_routes:
+    resource: E:\Wouter\web\wamp\www\reyan\vendor\Reyan\Framework\Tests\Fixtures\Routing\routes.yml
+
+login:
+    pattern: /login
+    controller: UserBundle:User:login
+
+show_page:
+    pattern: /:slug
+    controller: PageBundle:Page:show
